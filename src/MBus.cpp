@@ -329,9 +329,7 @@ MBusHandle::selectSecondaryAddress(const char *mask) {
 };
 
 
-#ifdef PLATFORM_ID
-
-MBusSerialHandle::MBusSerialHandle(USARTSerial *handle) {
+MBusSerialHandle::MBusSerialHandle(HardwareSerial *handle) {
   this->handle = handle;
 };
 MBusSerialHandle::~MBusSerialHandle(){};
@@ -460,5 +458,3 @@ int MBusSerialHandle::recv(MBusFrame *frame) {
 
   return MBUS_RECV_RESULT_OK;
 };
-
-#endif

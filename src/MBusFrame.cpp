@@ -454,7 +454,7 @@ int MBusFrame::verify() {
   checksum = this->getChecksum();
 
   if (this->checksum != checksum) {
-    MBUS_ERROR("Invalid checksum (0x%.2x != 0x%.2x", this->checksum, checksum);
+    MBUS_ERROR("Invalid checksum (0x%.2x != 0x%.2x)", this->checksum, checksum);
     return -1;
   }
 

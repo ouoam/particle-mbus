@@ -5,6 +5,8 @@
 #include "MBusFrame.h"
 #include "MBusRecord.h"
 
+#include "HardwareSerial.h"
+
 #define _DEBUG 1
 
 #ifdef LINUX
@@ -12,20 +14,11 @@
 #define MBUS_WARN(...) fprintf(stderr, __VA_ARGS__)
 #define MBUS_ERROR(...) fprintf(stderr, __VA_ARGS__)
 #define MBUS_DEBUG(...) fprintf(stderr, __VA_ARGS__)
-#elif PLATFORM_ID
-#include "Particle.h"
-  #ifdef _DEBUG
-  #define MBUS_INFO(...) Log.info(__VA_ARGS__)
-  #define MBUS_WARN(...) Log.warn(__VA_ARGS__)
-  #define MBUS_ERROR(...) Log.error(__VA_ARGS__)
-  #define MBUS_DEBUG(...) Log.trace(__VA_ARGS__)
-  #else
-  #define MBUS_INFO(...)
-  #define MBUS_WARN(...)
-  #define MBUS_ERROR(...)
-  #define MBUS_DEBUG(...)
-  #endif
 #else 
+// #define MBUS_INFO(...) Serial.printf(__VA_ARGS__)
+// #define MBUS_WARN(...) Serial.printf(__VA_ARGS__)
+// #define MBUS_ERROR(...) Serial.printf(__VA_ARGS__)
+// #define MBUS_DEBUG(...) Serial.printf(__VA_ARGS__)
 #define MBUS_INFO(...)
 #define MBUS_WARN(...)
 #define MBUS_ERROR(...)
@@ -73,11 +66,9 @@ public:
   int selectSecondaryAddress(const char *mask);
 };
 
-#ifdef PLATFORM_ID
-
 class MBusSerialHandle : public MBusHandle {
 public:
-  MBusSerialHandle(USARTSerial *handle);
+  MBusSerialHandle(HardwareSerial *handle);
   ~MBusSerialHandle();
 
   int open();
@@ -87,10 +78,8 @@ public:
 
   int setBaudrate(long baudrate);
 
-  USARTSerial *handle;
+  HardwareSerial *handle;
 };
-
-#endif
 
 /*
 class MBusNetHandle : public MBusHandle {
